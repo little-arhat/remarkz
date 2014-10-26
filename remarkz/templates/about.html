@@ -1,0 +1,51 @@
+{% import "macroses.jinja" as M %}
+{% extends "base.html" %}
+{% block title %} About {% endblock %}
+{% block head %}
+{{ super() }}
+<script type="text/javascript" src="{{ url_for('static', filename='about.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<div>
+  <div class="text">
+    <h1>RemarkZ</h1>
+    <p>
+      Sometimes you use someone else&apos;s computer and find something neat and intersting.
+      But you, of course, afraid to use your twitter, mail, bookmarks manager, because you know that everyone wants your passwords!
+    </p>
+    <p>
+      So, you can easily add your stuff here and then get it back.
+      You don&apos;t need to log in or register. Just enter appropriate tags and post your remark.
+      Everyone can access your remarks but only you know proper key words.
+    </p>
+    <p>
+      Authors: cuprum, little_arhat. <a href="http://github.com/little-arhat/remarkz">Sources</a>.
+    </p>
+    <p>
+      Powered by <a href="http://python.org">python</a>, <a href="http://flask.pocoo.org/">flask</a>, <a href="http://redis.io">redis</a> and <a href="http://jquery.com/">jquery</a>.
+    </p>
+    <p class="hint">
+      You can generate bookmarklet with your tags. Once it&apos;s done, you can add your remarks with a single click!
+    </p>
+  </div>
+    <form id="bookmarklet" action="/about/" method="POST">
+      <div class="form_element" >
+        <input id="tags" type="text" name="tags" size="50" value="enter tags separated by space" />
+        <input id="go" type="submit" value="Make" />
+      </div>
+
+      {% if request.method != 'GET' and tags %}
+      <div class="text info">
+        Bookmarklet with your tags ({% autoescape false %}{{ M.show_tags(tags) }}{% endautoescape %}):
+        <p class="center">
+          <a href='javascript:function tltp(a){d=document;mObj=d.getElementsByTagName("body")[0].appendChild(d.createElement("div"));mObj.id="modalContainer";st="background-color:transparent;position:fixed;top:0px;right:0px;z-index:10000;";if(mObj.cssText)mObj.cssText=st;else mObj.style.cssText=st;alertObj=mObj.appendChild(d.createElement("div"));st="position:relative;width:300px;min-height:100px;margin-top:50px;border:2px solid #000;background-color:#F2F5F6;";if(alertObj.cssText)alertObj.cssText=st;else alertObj.style.cssText=st;alertObj.appendChild(d.createElement("p")).innerHTML=a;rem=function(){document.getElementsByTagName("body")[0].removeChild(document.getElementById("modalContainer"))};setTimeout(rem,2E3)}function bkmrk(){d=document;t=d.getSelection?d.getSelection():d.selection.createRange().text;et=encodeURIComponent(t);t=et.trim().length?et:encodeURIComponent(d.location.toString());parameters="item="+t;url="{{ url_for('bookmarklet', tags='/'.join(tags), _external=True) }}";http_request=false;if(window.XMLHttpRequest){http_request=new XMLHttpRequest;http_request.overrideMimeType&&http_request.overrideMimeType("text/html")}else if(window.ActiveXObject)try{http_request=new ActiveXObject("Msxml2.XMLHTTP")}catch(a){try{http_request=new ActiveXObject("Microsoft.XMLHTTP")}catch(b){}}http_request||tltp("Cannot create XMLHTTP instance");http_request.onreadystatechange=function(){if(http_request.readyState==4)if(http_request.status==200){result=http_request.responseText;tltp(result)}else tltp(http_request.status)};http_request.open("POST",url,true);http_request.setRequestHeader("Content-type","application/x-www-form-urlencoded");http_request.setRequestHeader("Content-length",parameters.length);http_request.setRequestHeader("Connection","close");http_request.send(parameters)};void(bkmrk());'>Post Selfnote</a>
+        </p>
+        <p class="hint">
+          Drag link to Links Area in your browser. Click on bookmarklet when you browsing to save current url to remarkz. Also you can select text and send it to remarkz. Enjoy!
+        </p>
+      </div>
+      {% endif %}
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,7 @@
+Flask==0.8
+Jinja2==2.6
+Werkzeug==0.8.3
+dosca==1.2.5
+redis==2.7.5
+eventlet==0.12.1
+greenlet==0.4.0

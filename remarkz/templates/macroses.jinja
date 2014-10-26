@@ -1,0 +1,6 @@
+{%- macro show_tags(tags) -%}
+{%- for tag in tags -%}
+<span class="info"><a href="{{ url_for('main', tags=tag) }}">{{ tag|e }}</a></span>{% if not loop.last %}, {% endif %}
+{%- endfor -%}
+{%- endmacro -%}
+

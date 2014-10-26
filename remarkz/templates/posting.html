@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+  {% block top_content %}
+  {% endblock %}
+<div class="form">
+  <form id="post" action="{{ url_for('add', tags='/'.join(tags)) }}" method="POST">
+    <div class="form_element">
+      <textarea id="item" cols="48" rows="3" name="item" tabindex="2"></textarea>
+    </div>
+    <div class="form_element" id="action">
+        <span id="count"></span>
+        <input id="add" type="submit" tabindex="3" value="add" />
+    </div>
+  </form>
+</div>
+{% block bottom_content %}{% endblock %}
+{% endblock %}

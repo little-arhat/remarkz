@@ -1,0 +1,11 @@
+*.pyc
+garbage
+TODO
+dist
+build
+env
+.idea
+*.tmp
+.hg
+.hgignore
+.hgtags

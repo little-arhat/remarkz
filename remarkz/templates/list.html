@@ -1,0 +1,24 @@
+{% import "macroses.jinja" as M %}
+{% extends "posting.html" %}
+{% block title %} List for {{ ' '.join(tags) }} {% endblock %}
+{% block head %}
+{{ super() }}
+<script type="text/javascript" src="{{ url_for('static', filename='list.js') }}"></script>
+{% endblock %}
+{% block top_content %}
+<div class="text info">Tags: {% autoescape false %}{{ M.show_tags(tags) }}{% endautoescape %}</div>
+<div class="paging">
+{% if page > 1 %} <a href="{{ url_for('main', tags='/'.join(tags)) }}?page={{ page - 1 }}"> =&lt;&lt; </a> {% endif %}
+&nbsp;Page # {{ page }} &nbsp;
+{% if not last_page %} <a href="{{ url_for('main', tags='/'.join(tags)) }}?page={{ page + 1 }}"> &gt;&gt;= </a> {% endif %}
+</div>
+{% endblock %}
+{% block bottom_content %}
+<dl class="text">
+{% for item in items %}
+<dt class="hint"> {{ loop.index + start }}) {{ item[1] }}</dt>
+<dd>{{ item[0]|urlize(40) }}</dd>
+{% endfor %}
+</dl>
+{% endblock %}
+
